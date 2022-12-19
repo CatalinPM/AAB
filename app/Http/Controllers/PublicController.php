@@ -44,4 +44,11 @@ class PublicController extends Controller
         return redirect()->route('home')->with('message', 'Grazie per averci contattato');
 
     }
+
+    public function searchArticle(Request $request)
+    {
+        $key = $request->input('key');
+        $articles = Article::search($key)->where('is_accepted', true)->get();
+        return view('articles.index', compact('articles', 'key'));
+    }
 }

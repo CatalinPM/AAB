@@ -22,7 +22,7 @@
                 @endif
                 @if(Auth::user() && Auth::user()->is_writer)
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('writer.dashboard') }}">Dashboard</a>
+                <a class="nav-link" href="{{ route('articles.dashboard') }}">Author</a>
                 </li>
                 @endif
                 <li class="nav-item dropdown">
@@ -43,8 +43,8 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
                 </li> --}}
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="{{ route('search.articles') }}" method="get" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" name="key" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>

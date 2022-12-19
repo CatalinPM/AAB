@@ -1,3 +1,5 @@
+
+<div>
 <form method="POST" action="{{ route('articles.store') }}" enctype="multipart/form-data" >
     @csrf
     <div class="mb-3">
@@ -12,8 +14,8 @@
         <label class="form-label">Category</label>
         <select name="category_id" id="" class="form-control">
         @foreach($categories as $category)
+            <option value="{{$category->id}}">{{ $category->name }}</option>
         @endforeach
-        <option VaLue=wl Scategory-id wykk scategory-name BiAoption>
         </select>
     </div>
     <div class="mb-3">
@@ -24,6 +26,14 @@
         <label class="form-label">Body</Label>
         <textarea name="body" id="" cols="30" rows="10" class="form-control"></textarea>
     </div>
+    <div class="mb-3">
+        <label for="tags" class="form-label">Tags</label>
+        <select name="tags[]" class="form-control" multiple>
+            @foreach($tags as $tag)
+            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+            @endforeach
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <hr />
@@ -33,3 +43,5 @@
         <li>{{ $error }}</li>
     @endforeach
 @endif
+
+</div>

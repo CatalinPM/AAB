@@ -22,12 +22,19 @@ Route::middleware('admin')->group(function(){
     Route::get('/admin/{user}/set-revisor', [AdminController::class, 'makeUserRevisor'])->name('admin.makeUserRevisor');
     Route::get('/admin/{user}/set-admin', [AdminController::class, 'makeUserAdmin'])->name('admin.makeUserAdmin');
     Route::get('/admin/{user}/set-writer', [AdminController::class, 'makeUserWriter'])->name('admin.makeUserWriter');
+    Route::post('/tag/store', [AdminController::class, 'storeTag'])->name('tag.store');
+    Route::post('/category/{category}/update', [AdminController::class, 'editCategory'])->name('category.edit');
+    Route::post('/category/store', [AdminController::class, 'storeCategory'])->name('category.store');
+    Route::delete('/category/{category}/delete', [AdminController::class, 'deleteCategory'])->name('category.delete');
 });
 
 Route::middleware('writer')->group(function(){
-    Route::get('/writer/dashboard', [WriterController::class, 'writerDashboard'])->name('writer.dashboard');
     Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
-    Route::get('/article/store', [ArticleController::class, 'store'])->name('article.store');
+    Route::post('/article/store', [ArticleController::class, 'store'])->name('articles.store');
+    Route::get('/article/dashboard', [ArticleController::class, 'articleDashboard'])->name('articles.dashboard');
+    Route::get('/article/{article}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+    Route::get('/article/{article}/update', [ArticleController::class, 'update'])->name('article.update');
+    Route::get('/article/{article}/delete', [ArticleController::class, 'destroy'])->name('article.delete');
 });
 
 Route::middleware('revisor')->group(function(){
@@ -36,4 +43,9 @@ Route::middleware('revisor')->group(function(){
     Route::get('/revisor/article/{article}/accept', [RevisorController::class, 'acceptArticle'])->name('revisor.accept');
     Route::get('/revisor/article/{article}/reject', [RevisorController::class, 'rejectArticle'])->name('revisor.reject');
 });
+
+Route::get('/article/search', [PublicController::class, 'searchArticle'])->name('search.articles');
+
+Route::post('/tag/{tag}/update', [AdminController::class, 'editTag'])->name('tag.edit');
+Route::delete('/tag/{tag}/delete', [AdminController::class, 'deleteTag'])->name('tag.delete');
 

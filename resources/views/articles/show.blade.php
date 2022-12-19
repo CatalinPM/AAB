@@ -21,6 +21,12 @@
             <p>Pubblicato il: {{ $article->created_at->format('d/m/Y') }}</p>
         </div>
     </div>
+    <div class="d-flex">
+        <p class="h5">Tag: </p>
+        @foreach ($article->tags as $tag)
+        <span>#{{ $tag->name }}</span>
+        @endforeach
+    </div>
 
 </div>
 @endsection
