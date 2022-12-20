@@ -1,12 +1,12 @@
 @extends('layouts.home')
 @section('content')
-
-@endsection
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-6">
+            {{-- @dd($article) --}}
+            @foreach($articles as $article)
             <h1>{{ $article->title }}</h1>
-            <h3>{{$srticle->description}}</h3>
+            <h3>{{$article->description}}</h3>
         </div>
     </div>
 
@@ -21,10 +21,15 @@
             <p>Pubblicato il: {{ $article->created_at->format('d/m/Y') }}</p>
         </div>
     </div>
+    @endforeach
     <div class="d-flex">
         <p class="h5">Tag: </p>
-        @foreach ($article->tags as $tag)
-        <span>#{{ $tag->name }}</span>
+
+        @foreach ($articles_tags as $tag)
+            @foreach($tag->tags as $item)
+                {{-- @dd($item->name) --}}
+                <span>#{{ $item->name }}</span>
+            @endforeach
         @endforeach
     </div>
 

@@ -12,9 +12,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $adminRequests = User::where('is_admin', NULL)->get();
-        $revisorRequests = User::where('is_revisor', NULL)->get();
-        $writerRequests = User::where('is_writer', NULL)->get();
+        $adminRequests = User::where('is_admin', '=','0')->get();
+        $revisorRequests = User::where('is_revisor', '=', '0')->get();
+        $writerRequests = User::where('is_writer', '=', '0')->get();
         $tags = Tag::all();
         $categories = Category::all();
         //dd($adminRequests, $revisorRequests, $writerRequests);

@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PublicController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\RevisorController;
 
 
 Route::get('/', [PublicController::class, 'home'])->name('home');
@@ -33,8 +34,8 @@ Route::middleware('writer')->group(function(){
     Route::post('/article/store', [ArticleController::class, 'store'])->name('articles.store');
     Route::get('/article/dashboard', [ArticleController::class, 'articleDashboard'])->name('articles.dashboard');
     Route::get('/article/{article}/edit', [ArticleController::class, 'edit'])->name('article.edit');
-    Route::get('/article/{article}/update', [ArticleController::class, 'update'])->name('article.update');
-    Route::get('/article/{article}/delete', [ArticleController::class, 'destroy'])->name('article.delete');
+    Route::put('/article/{article}/update', [ArticleController::class, 'update'])->name('article.update');
+    Route::delete('/article/{article}/delete', [ArticleController::class, 'destroy'])->name('article.delete');
 });
 
 Route::middleware('revisor')->group(function(){

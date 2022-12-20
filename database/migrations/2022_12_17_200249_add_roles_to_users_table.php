@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('is_admin')->nullable()->default(false);
             $table->boolean('is_revisor')->nullable()->default(false);
-            $table->boolean('is_writer')->nullable()->default(false);
+            $table->boolean('is_writer')->nullable()->default('1');
         });
     }
 

@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                {{-- <x-revisor-table :article="$articles" /> --}}
+                <x-revisor-table :article="$articles" />
             </div>
         </div>
     </div>

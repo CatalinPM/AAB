@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($aticles as $article)
+            @foreach($articles as $article)
             <tr>
                 <th scope="row">{{ $article->id }}</th>
                 <td>{{ $article->title }}</td>

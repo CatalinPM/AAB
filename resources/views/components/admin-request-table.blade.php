@@ -10,7 +10,7 @@
         </thead>
 
         <tbody>
-            {{-- @dd($adminRequest) --}}
+             {{-- @dd($adminRequests) --}}
             @foreach ($adminRequests as $user)
             <tr>
                 <th scope="row">{{ $user->id }}</th>

@@ -1,4 +1,4 @@
-<div>
+<div class="container">
     <table class="table">
         <thead>
             <tr>
@@ -18,12 +18,12 @@
                 <td>
                     <form action="{{ route('tag.edit', $tag) }}" method="POST" class="w-50">
                         @csrf
-                        <input type="text" placeholder="nuovo nome" name="name" class="form-control">
+                        <input type="text" placeholder="nuovo nome" name="name" class="form-control ">
                         <button class="btn btn-info" type="submit">Salva</button>
                     </form>
                 </td>
                 <td>
-                    <form action="{{ route('tag.delete', $tag) }}" class="w-50" method="POST">
+                    <form action="{{ route('tag.delete', $tag) }}" class="" method="post">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit">Elimina</button>

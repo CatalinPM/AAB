@@ -1,3 +1,6 @@
+
+@extends('layouts.home')
+@section('content')
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
@@ -54,9 +57,10 @@
                 </div>
 
                 <div class="mt-2">
-                    <button class="btn bg-main">Pubblica articolo</button>
+                    <button class="btn btn-warning">Pubblica articolo</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@endsection

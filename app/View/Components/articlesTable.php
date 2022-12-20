@@ -16,7 +16,7 @@ class articlesTable extends Component
     /**
      * Create the component instance.
      *
-     * @param  string  $adminRequests
+     * @param  string  $articles
      * @return void
      */
 

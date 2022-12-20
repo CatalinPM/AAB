@@ -6,7 +6,9 @@ use App\Models\Tag;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Console\Input\Input;
 
 class ArticleController extends Controller
 {
@@ -28,8 +30,7 @@ class ArticleController extends Controller
     public function create()
     {
         $tags = Tag::all();
-        $categories = Category::all();
-        return view('articles.create', compact('tags', 'categories'));
+        return view('articles.create', compact('tags'));
     }
 
     /**
@@ -40,20 +41,65 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $articles = Auth::user()->articles->create(
-            [
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'body' => $request->input('body'),
-                'img' => $request->file('img')->store("public/img"),
-                'category_id' => $request->input('category_id')
-            ]
-        );
-        $selectedTags = $request->input('tags');
-        foreach($selectedTags as $tagId){
-            $articles->tags()->attach($tagId);
+        //diciamo che non va a buon fine
+        $success = false;
+
+        DB::beginTransaction();
+        try
+        {
+            $article = new Article;
+            $article->user_id = Auth::user()->id;
+            $article->title = $request->input('title');
+            $article->description = $request->input('description');
+            $article->body = $request->input('body');
+            $article->img = $request->file('img')->store("public/img");
+            $article->category_id = $request->input('category_id');
+
+            if($article->save()){
+                //dd($request->input('tags'));
+                $selectedTags = $request->input('tags');
+                foreach($selectedTags as $tagId){
+                $article->tags()->sync($tagId);
+                }
+                $success = true;
+                foreach($selectedTags as $tagId){
+                    $article->tags()->attach($tagId);
+                }
+            }
+        } catch (\Exception $e){
+            return $e;
         }
-        return redirect()->route('home')->with("message", "Articolo caricato correttamente");
+        if ($success){
+            DB::commit();
+            return redirect()->route('home')->with("message", "Articolo caricato correttamente");
+        }else
+        {
+            DB::rollback();
+            return redirect()->route('home')->with("message", "Opps! Articolo  non caricato correttamente");
+
+        }
+
+
+        //$article->tags = $request->input('tags');
+        //dd($article->title,$article->description,$article->body,$article->img, $article->category_id, $article->tags);
+        //dd($request);
+        // $article->save();
+
+        // $tags = new Article_tag;
+        // $article->tags = $request->input('tags');
+
+        // $article = Auth::user()->articles->create(
+        //     [
+        //         'title' => $request->input('title'),
+        //         'description' => $request->input('description'),
+        //         'body' => $request->input('body'),
+        //         'img' => $request->file('img')->store("public/img"),
+        //         'category_id' => $request->input('category_id')
+        //     ]
+        // );
+
+
+
     }
 
     /**
@@ -64,7 +110,11 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return view('article.show', compact('article'));
+        $articles = Article::find($article);
+        //dd($article);
+        $articles_tags = Article::with('tags')->get();
+        //dd($tags);
+        return view('articles.show', compact('articles', 'articles_tags'));
     }
 
     /**
@@ -75,8 +125,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        $tag = Tag::all();
-        return view('article.edit', compact('article', 'tags'));
+        $tags = Tag::all();
+        return view('articles.edit', compact('article', 'tags'));
     }
 
     /**
@@ -110,7 +160,7 @@ class ArticleController extends Controller
         }
         $article->tags()->detach();
         $article->tags()->sync($request->input('tags'));
-        return redirect()->route('article.dashboard');
+        return redirect()->route('articles.dashboard');
     }
 
     /**
@@ -134,7 +184,9 @@ class ArticleController extends Controller
 
     public function articleDashboard()
     {
-        return view('articles.dashboard');
+        $id = Auth::user()->id;
+        $articles = Article::where('user_id', $id)->get();
+        return view('articles.dashboard', compact('articles'));
     }
 
 }

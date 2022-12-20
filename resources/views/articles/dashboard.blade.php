@@ -12,6 +12,7 @@
             @if(count(Auth::user()->articles) > 0)
             <div class="cal-12">
                 <h6>Tutti i tuoi articoli</h6>
+                <a href="{{ route('articles.create') }}" class="btn btn-info">Nuovo articolo</a>
             </div>
             <div class="col-12 my-3">
                 <x-articles-table :articles="Auth::user()->articles"/>

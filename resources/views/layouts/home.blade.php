@@ -14,9 +14,10 @@
             @endif
         </div>
         <div id="main" class="row">
-            @if(Request::url() === '/')
-                <x-show_articles />
-            @endif
+                {{-- @dd($articles) --}}
+                @if(request()->route()->getName() == 'home')
+                <x-show_articles :articles="$articles"/>
+                @endif
             @yield('content')
         </div>
 
