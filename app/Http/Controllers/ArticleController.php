@@ -78,28 +78,6 @@ class ArticleController extends Controller
             return redirect()->route('home')->with("message", "Opps! Articolo  non caricato correttamente");
 
         }
-
-
-        //$article->tags = $request->input('tags');
-        //dd($article->title,$article->description,$article->body,$article->img, $article->category_id, $article->tags);
-        //dd($request);
-        // $article->save();
-
-        // $tags = new Article_tag;
-        // $article->tags = $request->input('tags');
-
-        // $article = Auth::user()->articles->create(
-        //     [
-        //         'title' => $request->input('title'),
-        //         'description' => $request->input('description'),
-        //         'body' => $request->input('body'),
-        //         'img' => $request->file('img')->store("public/img"),
-        //         'category_id' => $request->input('category_id')
-        //     ]
-        // );
-
-
-
     }
 
     /**
